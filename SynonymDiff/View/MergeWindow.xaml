@@ -1,0 +1,27 @@
+﻿<Window x:Class="SynonymDiff.View.MergeWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SynonymDiff.View"
+        mc:Ignorable="d"
+        Title="Process Conflicts" Height="380.357" Width="732.589"
+        DataContext="{Binding Merge, Source={StaticResource Locator}}">
+    <Grid>
+        <TextBox HorizontalAlignment="Left" Height="94" Margin="50,41,0,0" TextWrapping="Wrap" Text="{Binding OriginalText}" VerticalAlignment="Top" Width="190" IsEnabled="False"/>
+        <TextBox HorizontalAlignment="Left" Height="94" Margin="312,41,0,0" TextWrapping="Wrap" Text="{Binding NewText}" VerticalAlignment="Top" Width="190" IsEnabled="False"/>
+        <Label Content="{Binding TopHintContent}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="In Original Document" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="In New Document" HorizontalAlignment="Left" Margin="312,10,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="132" Margin="10,196,0,0" TextWrapping="Wrap" Text="{Binding MergedText}" VerticalAlignment="Top" Width="492"/>
+        <Label Content="Preview:" HorizontalAlignment="Left" Margin="10,165,0,0" VerticalAlignment="Top"/>
+        <Button Content="Next" HorizontalAlignment="Left" Margin="573,292,0,0" VerticalAlignment="Top" Width="123" Height="36" Command="{Binding FinishThisConflict}"/>
+        <CheckBox Content="" HorizontalAlignment="Left" Margin="30,76,0,0" VerticalAlignment="Top" IsChecked="{Binding Mode=TwoWay, Path=IsOriginalChecked}"/>
+        <CheckBox Content="" HorizontalAlignment="Left" Margin="288,76,0,0" VerticalAlignment="Top" IsChecked="{Binding Mode=TwoWay, Path=IsNewChecked}" />
+        <ComboBox HorizontalAlignment="Left" Margin="576,53,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Mode=TwoWay,Path=UnsolvedConflicts,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Mode=TwoWay, Path=CurrentKey}"/>
+        <Label Content="{Binding HintContent}" HorizontalAlignment="Left" Margin="576,20,0,0" VerticalAlignment="Top"/>
+        <Label Content="Resolved" HorizontalAlignment="Left" Margin="649,20,0,0" VerticalAlignment="Top"/>
+        <Label Content="Current Resolving Key:" HorizontalAlignment="Left" Margin="544,147,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding CurrentKey}" HorizontalAlignment="Left" Margin="544,178,0,0" VerticalAlignment="Top" FontSize="18"/>
+    </Grid>
+</Window>

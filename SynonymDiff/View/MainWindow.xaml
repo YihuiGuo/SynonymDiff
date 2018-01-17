@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ignore="http://www.galasoft.ch/ignore"
         mc:Ignorable="d ignore"
-        Height="300"
-        Width="300"
-        Title="MVVM Light Application"
+        Height="249.441"
+        Width="502.315"
+        Title="Select Files"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
-    
+
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,7 +25,14 @@
                    Text="{Binding WelcomeTitle}"
                    VerticalAlignment="Center"
                    HorizontalAlignment="Center"
-                   TextWrapping="Wrap" />
+                   TextWrapping="Wrap" Margin="385,50,109,120" />
+        <TextBox TextWrapping="NoWrap"  AcceptsReturn="False" HorizontalAlignment="Left" Height="23" Margin="8,51,0,0" Text="{Binding OriginalFileName}" VerticalAlignment="Top" Width="194"/>
+        <TextBox TextWrapping="NoWrap"  AcceptsReturn="False" HorizontalAlignment="Left" Height="23" Margin="265,51,0,0" Text="{Binding NewFileName}" VerticalAlignment="Top" Width="194"/>
+        <Label Content="Original File " HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="New File" HorizontalAlignment="Left" Margin="354,10,0,0" VerticalAlignment="Top"/>
+        <Button Content="..." HorizontalAlignment="Left" Margin="207,54,0,0" VerticalAlignment="Top" Width="20" Command="{Binding SelectOriginalFile}"/>
+        <Button Content="..." HorizontalAlignment="Left" Margin="464,51,0,0" VerticalAlignment="Top" Width="20" Command="{Binding SelectNewFile}"/>
+        <Button Content="Diff" HorizontalAlignment="Left" Margin="157,130,0,0" VerticalAlignment="Top" Width="183" Command="{Binding StartDiff}" Height="44"/>
 
     </Grid>
 </Window>

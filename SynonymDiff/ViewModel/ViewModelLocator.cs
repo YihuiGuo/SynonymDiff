@@ -12,6 +12,7 @@
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
 using Microsoft.Practices.ServiceLocation;
+using SynonymDiff.Model;
 
 namespace SynonymDiff.ViewModel
 {
@@ -27,10 +28,13 @@ namespace SynonymDiff.ViewModel
         static ViewModelLocator()
         {
             ServiceLocator.SetLocatorProvider(() => SimpleIoc.Default);
-
-           
-
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<MergeViewModel>();
+            SimpleIoc.Default.Register<AddViewModel>();
+
+            SimpleIoc.Default.Register<IFileParser, SynonymFileParser>();
+            SimpleIoc.Default.Register<IDocumentComparer, DocumentComparer>();
+
         }
 
         /// <summary>
@@ -47,6 +51,29 @@ namespace SynonymDiff.ViewModel
             }
         }
 
+        public MergeViewModel Merge
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<MergeViewModel>();
+            }
+        }
+
+        public IDocumentComparer Comparer
+        {
+            get
+            {
+                return SimpleIoc.Default.GetInstance<IDocumentComparer>();
+            }
+        }
+
+        public AddViewModel Add
+        {
+            get
+            {
+                return SimpleIoc.Default.GetInstance<AddViewModel>();
+            }
+        }
         /// <summary>
         /// Cleans up all the resources.
         /// </summary>

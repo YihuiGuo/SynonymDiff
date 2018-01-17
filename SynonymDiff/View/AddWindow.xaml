@@ -1,0 +1,22 @@
+﻿<Window x:Class="SynonymDiff.View.AddWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SynonymDiff.View"
+        mc:Ignorable="d"
+        Title="Process New Entries" Height="324.285" Width="598.571"
+        DataContext="{Binding Add, Source={StaticResource Locator}}">
+    <Grid>
+        <Label Content="New Entry:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <TextBox HorizontalAlignment="Left" Height="97" Margin="10,41,0,0" TextWrapping="Wrap" Text="{Binding NewText}" VerticalAlignment="Top" Width="207"/>
+        <Button Content="Discard This" HorizontalAlignment="Left" Margin="10,195,0,0" VerticalAlignment="Top" Width="75" Command="{Binding DiscardEntry}"/>
+        <Button Content="Accept" HorizontalAlignment="Left" Margin="142,195,0,0" VerticalAlignment="Top" Width="75" Command="{Binding AddEntry}"/>
+        <Label Content="{Binding HintContent}" HorizontalAlignment="Left" Margin="433,18,0,0" VerticalAlignment="Top"/>
+        <Label Content="Handled Entries" HorizontalAlignment="Left" Margin="474,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="Current Adding Key:" HorizontalAlignment="Left" Margin="421,128,0,0" VerticalAlignment="Top"/>
+        <Label Content="{Binding CurrentKey}" HorizontalAlignment="Left" Margin="474,167,0,0" VerticalAlignment="Top" FontSize="18"/>
+        <ComboBox HorizontalAlignment="Left" Margin="421,71,0,0" VerticalAlignment="Top" Width="120" ItemsSource="{Binding Mode=TwoWay,Path=UnhandledEntries,UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Mode=TwoWay, Path=CurrentKey,UpdateSourceTrigger=PropertyChanged}"/>
+
+    </Grid>
+</Window>

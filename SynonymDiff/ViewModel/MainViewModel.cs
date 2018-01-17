@@ -1,52 +1,85 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using SynonymDiff.Model;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace SynonymDiff.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// See http://www.mvvmlight.net
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        string originalFileName, newFileName;
+        IFileParser fileParser;
 
-        /// <summary>
-        /// The <see cref="WelcomeTitle" /> property's name.
-        /// </summary>
-        public const string WelcomeTitlePropertyName = "WelcomeTitle";
+        public MainViewModel(IFileParser fileParser)
+        {
+            this.fileParser = fileParser;
+        }
 
-        private string _welcomeTitle = string.Empty;
-
-        /// <summary>
-        /// Gets the WelcomeTitle property.
-        /// Changes to that property's value raise the PropertyChanged event. 
-        /// </summary>
-        public string WelcomeTitle
+        public string OriginalFileName
         {
             get
             {
-                return _welcomeTitle;
+                return originalFileName;
             }
             set
             {
-                Set(ref _welcomeTitle, value);
+                originalFileName = value;
+                RaisePropertyChanged();
             }
         }
 
-        /// <summary>
-        /// Initializes a new instance of the MainViewModel class.
-        /// </summary>
-        public MainViewModel()
+        public string NewFileName
         {
-            
+            get
+            {
+                return newFileName;
+            }
+            set
+            {
+                newFileName = value;
+                RaisePropertyChanged();
+            }
         }
 
-        ////public override void Cleanup()
-        ////{
-        ////    // Clean up if needed
+        public RelayCommand SelectOriginalFile => new RelayCommand(() =>
+        {
+            OriginalFileName = BrowseFile();
+        });
 
-        ////    base.Cleanup();
-        ////}
+        public RelayCommand SelectNewFile => new RelayCommand(() =>
+        {
+            NewFileName = BrowseFile();
+        });
+
+        public RelayCommand StartDiff => new RelayCommand(
+            () =>
+            {
+                var originalKVPairs = fileParser.ParseFileToKVPair(OriginalFileName);
+                var newKVPairs = fileParser.ParseFileToKVPair(NewFileName);
+                new ViewModelLocator().Comparer.NewKVPairs = newKVPairs;
+                new ViewModelLocator().Comparer.OriginalKVPairs = originalKVPairs;
+
+                new ViewModelLocator().Comparer.RemoveDuplicate();
+                new ViewModelLocator().Comparer.CalculateConflict();
+                Messenger.Default.Send(new NotificationMessage("ShowConflicts"));
+            });
+
+        string BrowseFile()
+        {
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.DefaultExt = ".txt";
+            Nullable<bool> result = dlg.ShowDialog();
+            if (result == true)
+            {
+                return dlg.FileName;
+            }
+            else
+                return null;
+        }
     }
 }
